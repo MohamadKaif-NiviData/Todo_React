@@ -1,6 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
+import { itemData } from "../store/itemData";
 
-export const DisplayTodo = ({ todo, onDelete, onEdit, onChangeCheck }) => {
+export const DisplayTodo = () => {
+  const { todo } = useContext(itemData)
+  const { handleDelete } = useContext(itemData)
+  const { handleEdit } = useContext(itemData)
+  const { onChangeCheck } = useContext(itemData)
   return (
     <div>
       {todo.map((item) => (
@@ -32,7 +37,7 @@ export const DisplayTodo = ({ todo, onDelete, onEdit, onChangeCheck }) => {
                 onClick={() => {
                   const newText = prompt("Enter new text:", item.text);
                   if (newText !== null && newText.trim() !== "") {
-                    onEdit(item.id, newText);
+                    handleEdit(item.id, newText);
                   }
                 }}
               >
@@ -40,7 +45,7 @@ export const DisplayTodo = ({ todo, onDelete, onEdit, onChangeCheck }) => {
               </button>
               <button
                 className="btn btn-danger"
-                onClick={(e) => onDelete(item.id)}
+                onClick={(e) => handleDelete(item.id)}
               >
                 Delete
               </button>

@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useRef } from 'react'
+import { itemData } from '../store/itemData'
 
 
-export const AddTodos = ({handleTodo}) => {
-    
+export const AddTodos = () => {
+    const { handleAddTodo } = useContext(itemData)
     const todoNameElement = useRef()
         
    
@@ -11,7 +12,7 @@ export const AddTodos = ({handleTodo}) => {
     const handleClick = (event)=>{
         event.preventDefault()
        let todonames = todoNameElement.current.value;
-        handleTodo(todonames)
+      handleAddTodo(todonames)
         todoNameElement.current.value=''
         
         
