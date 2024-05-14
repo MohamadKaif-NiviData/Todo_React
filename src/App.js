@@ -11,12 +11,18 @@ import { useReducer } from 'react';
 
 const itemReducer = (itemstate,action)=>{
   let currentState = itemstate
-  console.log('call');
+
   if(action.type === 'NEW_ITEM'){
-    console.log('yes');
+    
     currentState = [...itemstate,{id:uuidv4(),text:action.playload.mytodo,iscompleted:false}]
   }else if(action.type === 'DELETE_ITEM'){
     currentState = itemstate.filter(item=>item.id !== action.payload.id)
+  }else if(action.type === 'EDIT_ITEM'){
+    
+    currentState = itemstate.map((item) =>
+    item.id === action.payload.id ? { ...item, text: action.payload.newtext } : item
+    
+  );
   }
 return currentState
 }
@@ -48,9 +54,15 @@ const handleDelete = (id)=> {
   // settodo(items)
 }
 const handleEdit = (id,newText)=>{
-  const updatedTodo = todo.map((item) =>
-  item.id === id ? { ...item, text: newText } : item
-);
+  
+const editItem = {
+  type:"EDIT_ITEM",
+  payload:{
+    id:id,
+    newtext:newText
+  }
+}
+todoDispatch(editItem)
 // settodo(updatedTodo);
  
 
